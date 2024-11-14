@@ -1,0 +1,194 @@
+<div>
+  <mat-card>
+    <div class="form-container">
+      <h3>Available Nodes</h3>
+      <!-- Form for Claiming Nodes -->
+      <form (ngSubmit)="claimNodes()">
+        <div class="form-fields" *ngIf="dataSource.length != 0">
+          <mat-form-field [hideRequiredMarker]="hideRequired()" [floatLabel]="floatLabel()">
+            <mat-label>Organization</mat-label>
+            <input matInput id="org" [(ngModel)]="org" name="org" placeholder="Enter org name" required />
+          </mat-form-field>
+
+          <mat-form-field [hideRequiredMarker]="hideRequired()" [floatLabel]="floatLabel()">
+            <mat-select placeholder="Choose label" id="labelKey" [(ngModel)]="labelKey" name="labelKey">
+              @for (label of labels; track label){
+                <mat-option [value] ="label.value" >{{label.viewValue}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field [hideRequiredMarker]="hideRequired()" [floatLabel]="floatLabel()">
+            <mat-select placeholder="Choose operator" id="shouldBe" [(ngModel)]="shouldBe" name="shouldBe">
+              @for (expression of expressions; track expression){
+                <mat-option [value] ="expression.value">{{expression.viewValue}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field [hideRequiredMarker]="hideRequired()" [floatLabel]="floatLabel()">
+            <mat-label>Value</mat-label>
+            <input matInput id="value" [(ngModel)]="value" name="value" placeholder="Enter value" required />
+          </mat-form-field>
+          
+          <button mat-button class="form-button" type="submit">
+            <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+            <span *ngIf="!isLoading">Claim Nodes</span>
+          </button>
+        </div>
+      </form>
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+    </div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Node ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cpuCores">
+      <th mat-header-cell *matHeaderCellDef> CPU Cores </th>
+      <td mat-cell *matCellDef="let element"> {{element.cpuCores}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="avgClockSpeedMHz">
+      <th mat-header-cell *matHeaderCellDef> Avg Clock Speed (MHz) </th>
+      <td mat-cell *matCellDef="let element"> {{element.avgClockSpeedMHz}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="avgCacheKB">
+      <th mat-header-cell *matHeaderCellDef> Avg Cache (KB) </th>
+      <td mat-cell *matCellDef="let element"> {{element.avgCacheKB}} </td>
+    </ng-container>
+
+    <!-- Memory Column -->
+    <ng-container matColumnDef="memory">
+      <th mat-header-cell *matHeaderCellDef> Memory (GB) </th>
+      <td mat-cell *matCellDef="let element"> {{element.memory}} </td>
+    </ng-container>
+
+    <!-- Disk Total Column -->
+    <ng-container matColumnDef="diskTotalGB">
+      <th mat-header-cell *matHeaderCellDef> Disk Total (GB) </th>
+      <td mat-cell *matCellDef="let element"> {{element.diskTotalGB}} </td>
+    </ng-container>
+
+    <!-- Disk Free Column -->
+    <ng-container matColumnDef="diskFreeGB">
+      <th mat-header-cell *matHeaderCellDef> Disk Free (GB) </th>
+      <td mat-cell *matCellDef="let element"> {{element.diskFreeGB}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['id', 'cpuCores', 'avgClockSpeedMHz', 'avgCacheKB', 'memory', 'diskTotalGB', 'diskFreeGB']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['id', 'cpuCores', 'avgClockSpeedMHz', 'avgCacheKB', 'memory', 'diskTotalGB', 'diskFreeGB'];"></tr>
+
+
+  </table>
+  <div *ngIf="dataSource.length === 0">
+    <p>There are no available nodes.</p>
+  </div>
+</mat-card>
+
+  <!-- <mat-card>
+    <div>
+      <h3>Allocated Nodes</h3>
+
+      <table mat-table [dataSource]="allocatedDataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Node ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cpuCores">
+          <th mat-header-cell *matHeaderCellDef> CPU Cores </th>
+          <td mat-cell *matCellDef="let element"> {{element.cpuCores}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="avgClockSpeedMHz">
+          <th mat-header-cell *matHeaderCellDef> Avg Clock Speed (MHz) </th>
+          <td mat-cell *matCellDef="let element"> {{element.avgClockSpeedMHz}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="avgCacheKB">
+          <th mat-header-cell *matHeaderCellDef> Avg Cache (KB) </th>
+          <td mat-cell *matCellDef="let element"> {{element.avgCacheKB}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="memory">
+          <th mat-header-cell *matHeaderCellDef> Memory (GB) </th>
+          <td mat-cell *matCellDef="let element"> {{element.memory}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="diskTotalGB">
+          <th mat-header-cell *matHeaderCellDef> Disk Total (GB) </th>
+          <td mat-cell *matCellDef="let element"> {{element.diskTotalGB}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="diskFreeGB">
+          <th mat-header-cell *matHeaderCellDef> Disk Free (GB) </th>
+          <td mat-cell *matCellDef="let element"> {{element.diskFreeGB}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="addLabel">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button (click)="openAddLabelDialog(element.id)">Add Label</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['id', 'cpuCores', 'avgClockSpeedMHz', 'avgCacheKB', 'memory', 'diskTotalGB', 'diskFreeGB', 'addLabel']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['id', 'cpuCores', 'avgClockSpeedMHz', 'avgCacheKB', 'memory', 'diskTotalGB', 'diskFreeGB', 'addLabel'];"></tr>
+
+      </table>
+
+      <div *ngIf="allocatedDataSource.length === 0">
+        <p>There are no allocated nodes.</p>
+      </div>
+    </div>
+  </mat-card> -->
+  <mat-card>
+    <div>
+      <h3>Allocated Nodes</h3>
+      <table mat-table [dataSource]="allocatedDataSource" class="mat-elevation-z8">
+  
+        <!-- Dynamic Column Headers -->
+        <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+          <th mat-header-cell *matHeaderCellDef> {{ columnDisplayNames[column] || column }} </th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="column === 'customLabels'; else standardCell">
+              <!-- Display custom labels in the "Custom Labels" column -->
+              <div *ngFor="let label of element.customLabels">
+                {{ label }}
+              </div>
+            </ng-container>
+            <ng-template #standardCell>
+              {{ element[column] || 'N/A' }}
+            </ng-template>
+          </td>
+        </ng-container>
+  
+        <!-- Add Label Button Column (Defined Separately) -->
+        <ng-container matColumnDef="addLabel">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button (click)="openAddLabelDialog(element.id)">Add Label</button>
+          </td>
+        </ng-container>
+  
+        <!-- Table Header and Row Definitions -->
+        <tr mat-header-row *matHeaderRowDef="allColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: allColumns;"></tr>
+  
+      </table>
+  
+      <div *ngIf="allocatedDataSource.length === 0">
+        <p>There are no allocated nodes.</p>
+      </div>
+    </div>
+  </mat-card>
+
+</div>

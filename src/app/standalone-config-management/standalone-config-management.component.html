@@ -1,0 +1,231 @@
+<div>
+    <h2>Standalone Config Management</h2>
+    <div class="button-create-group">
+    <button mat-button class="form-button" (click)="createConfigGroup()">
+      <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+      <span *ngIf="!isLoading">Create Standalone Config</span>
+    </button>
+    </div>
+    <mat-card>
+        <mat-card-header (click)="toggleConfigGroupDetails()" style="cursor: pointer;">
+          <mat-card-title>Config Group Details</mat-card-title>
+        </mat-card-header>
+        <mat-card-content  [@expandCollapse]="isConfigGroupDetailsExpanded ? 'expanded' : 'collapsed'">
+            <div class="form-container">
+                <form (ngSubmit)="getConfigGroup()">
+                    <div class="form-fields">
+                
+                        <mat-form-field [hideRequiredMarker]="hideRequired()" [floatLabel]="floatLabel()">
+                        <mat-label>Namespace</mat-label>
+                        <input matInput id="namespace" [(ngModel)]="namespace" name="namespace" placeholder="Enter namespace" required />
+                        </mat-form-field>
+                
+                        <mat-form-field [hideRequiredMarker]="hideRequired()" [floatLabel]="floatLabel()">
+                        <mat-label>Name</mat-label>
+                        <input matInput id="name" [(ngModel)]="name" name="name" placeholder="Enter name" required />
+                        </mat-form-field>
+
+                        <mat-form-field [hideRequiredMarker]="hideRequired()" [floatLabel]="floatLabel()">
+                          <mat-label>Version</mat-label>
+                          <input matInput id="version" [(ngModel)]="version" name="version" placeholder="Enter version" required />
+                        </mat-form-field>
+                        
+                        <button mat-button class="form-button" type="submit">
+                        <mat-spinner *ngIf="isLoadingConfig" diameter="20"></mat-spinner>
+                        <span *ngIf="!isLoadingConfig">Get Config Group</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+          <div *ngIf="configGroupData">
+          <div class="info-container">
+            <p><strong>Name:</strong> {{ configGroupData?.name }}</p>
+            <p><strong>Version:</strong> {{ configGroupData?.version }}</p>
+            <p><strong>Namespace:</strong> {{ configGroupData?.namespace }}</p>
+            <p><strong>Created At:</strong> {{ configGroupData?.createdAt | date: 'medium' }}</p>
+          </div>
+          <mat-divider></mat-divider> 
+          <h3>Parameters</h3>
+            <table mat-table [dataSource]="configGroupData?.paramSet || []" class="mat-elevation-z8 param-table">
+                <ng-container matColumnDef="key">
+                <th mat-header-cell *matHeaderCellDef> Key </th>
+                <td mat-cell *matCellDef="let param"> {{ param.key }} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="value">
+                <th mat-header-cell *matHeaderCellDef> Value </th>
+                <td mat-cell *matCellDef="let param"> {{ param.value }} </td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="['key', 'value']"></tr>
+                <tr mat-row *matRowDef="let param; columns: ['key', 'value']"></tr>
+            </table>
+        </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header (click)="toggleConfigGroupList()" style="cursor: pointer;">
+          <mat-card-title>Config Group List</mat-card-title>
+        </mat-card-header>
+        <mat-card-content  [@expandCollapse]="isConfigGroupListExpanded ? 'expanded' : 'collapsed'">
+            <div class="form-container">
+                <form (ngSubmit)="getConfigGroupList()">
+                    <div class="form-fields">
+                        <mat-form-field [hideRequiredMarker]="hideRequired()" [floatLabel]="floatLabel()">
+                        <mat-label>Organization</mat-label>
+                        <input matInput id="org" [(ngModel)]="org" name="org" placeholder="Enter org name" required />
+                        </mat-form-field>
+                
+                        <mat-form-field [hideRequiredMarker]="hideRequired()" [floatLabel]="floatLabel()">
+                        <mat-label>Namespace</mat-label>
+                        <input matInput id="namespace2" [(ngModel)]="namespace2" name="namespace2" placeholder="Enter namespace" required />
+                        </mat-form-field>
+                        
+                        <button mat-button class="form-button" type="submit">
+                        <mat-spinner *ngIf="isLoadingConfigList" diameter="20"></mat-spinner>
+                        <span *ngIf="!isLoadingConfigList">Get Config Group List</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+          <div *ngIf="configGroupListData.length > 0">
+          <mat-divider></mat-divider> 
+          <h3>Config Group Versions</h3>
+
+            <table mat-table [dataSource]="configGroupListData" class="mat-elevation-z8 param-table">
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <!-- <mat-checkbox (change)="$event ? masterToggle() : null"
+                                      [checked]="isAllSelected()"
+                                      [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox> -->
+                    </th>
+                    <td mat-cell *matCellDef="let group">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                      (change)="toggleSelection(group)"
+                                      [checked]="selection.isSelected(group)"
+                                      [disabled]="selection.selected.length === 2 && !selection.isSelected(group)"></mat-checkbox>
+                    </td>
+                </ng-container>
+                <!-- Organization Column -->
+                <ng-container matColumnDef="organization">
+                    <th mat-header-cell *matHeaderCellDef> Organization </th>
+                    <td mat-cell *matCellDef="let group"> {{ group.organization }} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let group"> {{ group.name }} </td>
+                </ng-container>
+
+                <!-- Version Column -->
+                <ng-container matColumnDef="version">
+                    <th mat-header-cell *matHeaderCellDef> Version </th>
+                    <td mat-cell *matCellDef="let group"> {{ group.version }} </td>
+                </ng-container>
+
+                <!-- Namespace Column -->
+                <ng-container matColumnDef="namespace">
+                    <th mat-header-cell *matHeaderCellDef> Namespace </th>
+                    <td mat-cell *matCellDef="let group"> {{ group.namespace }} </td>
+                </ng-container>
+
+                <!-- Created At Column -->
+                <ng-container matColumnDef="createdAt">
+                    <th mat-header-cell *matHeaderCellDef> Created At </th>
+                    <td mat-cell *matCellDef="let group"> {{ group.createdAt | date: 'medium' }} </td>
+                </ng-container>
+
+                <!-- Delete Column -->
+                <ng-container matColumnDef="delete">
+                  <th mat-header-cell *matHeaderCellDef> Remove </th>
+                  <td mat-cell *matCellDef="let element; let i = index"> 
+                      <button mat-button class="remove-button" (click)="deleteConfigGroupVersion(org, element.namespace, element.name, element.version, i); $event.stopPropagation()">
+                          <mat-spinner *ngIf="isLoadingDelete[i]" diameter="20"></mat-spinner>
+                          <span *ngIf="!isLoadingDelete[i]">Remove Version</span>
+                      </button>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="paramSets">
+                  <th mat-header-cell *matHeaderCellDef> Parameter Sets </th>
+                  <td mat-cell *matCellDef="let group">
+                      <div *ngFor="let paramSet of group.paramSets">
+                          <strong>{{ paramSet.name }}</strong> <!-- Name of the paramSet -->
+                          <table mat-table [dataSource]="paramSet.paramSet || []" class="inner-table">
+                              <!-- Key Column -->
+                              <ng-container matColumnDef="key">
+                                  <th mat-header-cell *matHeaderCellDef> Key </th>
+                                  <td mat-cell *matCellDef="let param"> {{ param.key }} </td>
+                              </ng-container>
+
+                              <!-- Value Column -->
+                              <ng-container matColumnDef="value">
+                                  <th mat-header-cell *matHeaderCellDef> Value </th>
+                                  <td mat-cell *matCellDef="let param"> {{ param.value }} </td>
+                              </ng-container>
+
+                              <!-- Headers and Rows for ParamSet Table -->
+                              <tr mat-header-row *matHeaderRowDef="['key', 'value']"></tr>
+                              <tr mat-row *matRowDef="let param; columns: ['key', 'value']"></tr>
+                          </table>
+                      </div>
+                  </td>
+              </ng-container>
+
+                <!-- Table Headers and Rows -->
+                <tr mat-header-row *matHeaderRowDef="['organization', 'name', 'version', 'namespace', 'createdAt', 'delete', 'paramSets', 'select']"></tr>
+                <tr mat-row *matRowDef="let group; columns: ['organization', 'name', 'version', 'namespace', 'createdAt', 'delete', 'paramSets', 'select']"></tr>
+            </table>
+            <button mat-button (click)="compareVersions()" [disabled]="selection.selected.length !== 2">Compare Versions</button>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card *ngIf="differences">
+        <mat-card-header>
+            <mat-card-title>Differences Between Versions</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <table mat-table [dataSource]="diffArray" class="mat-elevation-z8 param-table">
+                <!-- Parameter Set Name Column -->
+                <!-- <ng-container matColumnDef="paramSetName">
+                    <th mat-header-cell *matHeaderCellDef> Param Set Name </th>
+                    <td mat-cell *matCellDef="let diff"> {{ diff.paramSetName }} </td>
+                </ng-container> -->
+    
+                <!-- Difference Type Column -->
+                <ng-container matColumnDef="diffType">
+                    <th mat-header-cell *matHeaderCellDef> Difference Type </th>
+                    <td mat-cell *matCellDef="let diff"> {{ diff.diffType }} </td>
+                </ng-container>
+    
+                <!-- Key Column -->
+                <ng-container matColumnDef="key">
+                    <th mat-header-cell *matHeaderCellDef> Key </th>
+                    <td mat-cell *matCellDef="let diff"> {{ diff.key }} </td>
+                </ng-container>
+    
+                <!-- Value Column -->
+                <ng-container matColumnDef="old_value">
+                    <th mat-header-cell *matHeaderCellDef>Old Value</th>
+                    <td mat-cell *matCellDef="let diff"> {{ diff.old_value }} </td>
+                </ng-container>
+
+                <!-- Value Column -->
+                <ng-container matColumnDef="new_value">
+                    <th mat-header-cell *matHeaderCellDef>New  Value</th>
+                    <td mat-cell *matCellDef="let diff"> {{ diff.new_value }} </td>
+                </ng-container>
+    
+                <!-- Table Headers and Rows -->
+                <tr mat-header-row *matHeaderRowDef="['diffType', 'key', 'old_value', 'new_value']"></tr>
+                <tr mat-row *matRowDef="let diff; columns: ['diffType', 'key', 'old_value', 'new_value']"></tr>
+            </table>
+        </mat-card-content>
+    </mat-card>
+    
+</div>

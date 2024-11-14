@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Add Label</h2>
+<mat-dialog-content>
+  <form [formGroup]="labelForm">
+    <mat-form-field>
+      <mat-label>Label Name</mat-label>
+      <input matInput formControlName="labelName" placeholder="Enter label name" required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Value</mat-label>
+      <input matInput formControlName="value" placeholder="Enter value" required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Organization</mat-label>
+      <input matInput formControlName="org" placeholder="Enter organization" required>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()" cdkFocusInitial>Submit</button>
+</mat-dialog-actions>

@@ -1,0 +1,27 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+.mat-toolbar {
+    background-color: #336EE6; 
+    color: white; 
+}
+
+.mat-drawer {
+    background-color: #EEEEEF;
+    color: black;
+}
+
+.custom-sidenav-text {
+  color: black !important;
+}
+
+.toolbar-button{
+  color: white !important;
+}
+
+:host ::ng-deep button span{
+  &::before {
+    display: none;
+  }
+}

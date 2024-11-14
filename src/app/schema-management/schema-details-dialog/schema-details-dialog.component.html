@@ -1,0 +1,23 @@
+<div>
+    <ng-container class="content" *ngIf="!isLoading; else loadingTemplate">
+        <div class="modal-header">
+            <h3>{{ data.name }}</h3>
+            <button mat-button class="close-button" (click)="close()">✖</button>
+        </div>
+    
+        <div class="modal-content">
+            <p>Creation time: {{ data.creationTime | date: 'medium' }}</p>
+            <p>Version: {{ data.version }}</p>
+            <pre>{{ data.schema }}</pre>
+        </div>
+        
+        <div class="modal-footer" *ngIf="!isLoading">
+            <button mat-button (click)="close()">Close</button>
+        </div>
+    </ng-container>
+    <ng-template #loadingTemplate>
+        <div class="loading-fullscreen">
+          <mat-spinner></mat-spinner>
+        </div>
+    </ng-template>
+</div>

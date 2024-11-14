@@ -1,0 +1,98 @@
+<div>
+    <h2>Schema Management</h2>
+    <div class="button-create-schema">
+    <button mat-button (click)="openAddSchemaDialog()">
+        Create Schema
+    </button>
+    </div>
+  <mat-card>
+    <mat-card-header>
+        <mat-card-title>Schema Versions</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="form-container">
+            <form (ngSubmit)="getSchemaVersions()">
+                <div class="form-fields">
+                    <!-- <mat-form-field [hideRequiredMarker]="hideRequired()" [floatLabel]="floatLabel()">
+                    <mat-label>Organization</mat-label>
+                    <input matInput id="org" [(ngModel)]="org" name="org" placeholder="Enter org name" required />
+                    </mat-form-field> -->
+            
+                    <mat-form-field [hideRequiredMarker]="hideRequired()" [floatLabel]="floatLabel()">
+                    <mat-label>Namespace</mat-label>
+                    <input matInput id="namespace" [(ngModel)]="namespace" name="namespace" placeholder="Enter namespace name" required />
+                    </mat-form-field>
+            
+                    <mat-form-field [hideRequiredMarker]="hideRequired()" [floatLabel]="floatLabel()">
+                    <mat-label>Schema Name</mat-label>
+                    <input matInput id="name" [(ngModel)]="name" name="name" placeholder="Enter schema name" required />
+                    </mat-form-field>
+                    
+                    <button mat-button class="form-button" type="submit">
+                    <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+                    <span *ngIf="!isLoading">Get Schema Versions</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <table mat-table [dataSource]="schemaVersions" class="mat-elevation-z8">
+
+            <!-- Version Column -->
+            <ng-container matColumnDef="version">
+                <th mat-header-cell *matHeaderCellDef> Version </th>
+                <td mat-cell *matCellDef="let element"> {{element.version}} </td>
+            </ng-container>
+
+            <!-- Schema Name Column -->
+            <ng-container matColumnDef="schemaName">
+                <th mat-header-cell *matHeaderCellDef> Schema Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.schemaName}} </td>
+            </ng-container>
+        
+            <!-- Namespace Column -->
+            <ng-container matColumnDef="namespace">
+                <th mat-header-cell *matHeaderCellDef> Namespace </th>
+                <td mat-cell *matCellDef="let element"> {{element.namespace}} </td>
+            </ng-container>
+        
+            <!-- Organization Column -->
+            <ng-container matColumnDef="organization">
+                <th mat-header-cell *matHeaderCellDef> Organization </th>
+                <td mat-cell *matCellDef="let element"> {{element.organization}} </td>
+            </ng-container>
+
+            <!-- Validation Column -->
+            <ng-container matColumnDef="validate">
+                <th mat-header-cell *matHeaderCellDef> Validation </th>
+                <td mat-cell *matCellDef="let element; let i = index"> 
+                    <button mat-button class="validate-button" (click)="validateSchema(org, element.schemaName, element.version, element.namespace, i); $event.stopPropagation()">
+                        <mat-spinner *ngIf="isLoadingValidate[i]" diameter="20"></mat-spinner>
+                        <span *ngIf="!isLoadingValidate[i]">Validate Version</span>
+                    </button>
+                </td>
+            </ng-container>
+
+            <!-- Delete Column -->
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef> Remove </th>
+                <td mat-cell *matCellDef="let element; let i = index"> 
+                    <button mat-button class="remove-button" (click)="deleteSchemaVersion(org, element.schemaName, element.version, element.namespace, i); $event.stopPropagation()">
+                        <mat-spinner *ngIf="isLoadingDelete[i]" diameter="20"></mat-spinner>
+                        <span *ngIf="!isLoadingDelete[i]">Remove Version</span>
+                    </button>
+                </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="['version', 'schemaName', 'namespace', 'organization', 'validate', 'delete']"></tr>
+            <!-- <tr mat-row *matRowDef="let row; columns: ['version', 'schemaName', 'namespace', 'organization', 'validate', 'delete'];"></tr> -->
+            <tr mat-row 
+            *matRowDef="let row; let i = index; columns: ['version', 'schemaName', 'namespace', 'organization', 'validate', 'delete'];" 
+            [ngClass]="{'valid-schema-row': isValidSchema[i], 'invalid-schema-row': isValidSchema[i] == false}"
+            (click)="onRowClick(row.schemaName, row.version, row.namespace)">
+            </tr>
+        
+        </table>
+    </mat-card-content>
+  </mat-card>
+</div>
+    
