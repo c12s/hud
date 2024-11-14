@@ -1,0 +1,9 @@
+{
+    "/apis": {
+      "target": "http://localhost:5555",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }
+  

@@ -1,0 +1,61 @@
+::ng-deep .mat-dialog-container,
+::ng-deep .mat-mdc-dialog-surface,
+::ng-deep .mat-mdc-dialog-surface .mdc-dialog__surface {
+  border-radius: 5px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  margin: 10px 0px 0px 0px;
+  position: relative;
+}
+
+.close-button {
+  position: absolute; 
+  right: 10px;
+  top: 5px;
+  cursor: pointer;
+}
+
+.modal-content {
+  margin: 0px 10px;
+}
+
+.ng-container {
+  margin: 0px 10px;
+}
+
+pre {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border: 1px solid #ccc;
+  white-space: pre-wrap;
+  font-family: monospace;
+  max-height: 300px;
+  overflow-y: auto; 
+  margin: 0px 10px;
+}
+
+.modal-footer {
+  margin-top: 15px;
+  text-align: right;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; 
+}
+
+.loading-fullscreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}

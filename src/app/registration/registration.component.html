@@ -1,0 +1,106 @@
+<div class="col-md-12">
+  <div class="form-container">
+    <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <h1 class="header register-title">Register</h1>
+
+      <!-- Username Field -->
+      <div class="form-group input-wrap">
+        <label for="username">Username</label>
+        <div class="input-wrap__group">
+          <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required minlength="4" maxlength="10" #username="ngModel" id="username" />
+            <small class="text-danger" *ngIf="username.invalid && username.errors?.['required'] && f.submitted">Username is required</small>
+            <small class="text-danger" *ngIf="username.invalid && username.errors?.['minlength'] && f.submitted">Username must be at least 3 characters</small>
+            <small class="text-danger" *ngIf="username.invalid && username.errors?.['maxlength'] && f.submitted">Username must be at most 30 characters</small>
+        </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group input-wrap">
+        <label for="email">Email</label>
+        <div class="input-wrap__group">
+          <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required email #email="ngModel" id="email" />
+          <div *ngIf="email.invalid && f.submitted">
+            <small class="text-danger" *ngIf="email.errors?.['required']">Email is required</small>
+            <small class="text-danger" *ngIf="email.errors?.['email']">Please enter a valid email address</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group input-wrap">
+        <label for="password">Password</label>
+        <div class="input-wrap__group">
+          <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required minlength="4" #password="ngModel" id="password" />
+          <div *ngIf="password.invalid && f.submitted">
+            <small class="text-danger" *ngIf="password.errors?.['required']">Password is required</small>
+            <small class="text-danger" *ngIf="password.errors?.['minlength']">Password must be at least 6 characters</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirm Password Field -->
+      <div class="form-group input-wrap">
+        <label for="passwordConfirmation">Confirm Password</label>
+        <div class="input-wrap__group">
+          <input type="password" class="form-control" name="passwordConfirmation" [(ngModel)]="form.passwordConfirmation" required minlength="4" #passwordConfirmation="ngModel" id="passwordConfirmation" />
+          <div *ngIf="passwordConfirmation.invalid && f.submitted">
+            <small class="text-danger" *ngIf="passwordConfirmation.errors?.['required']">Password confirmation is required</small>
+          </div>
+          <div *ngIf="form.password !== form.passwordConfirmation && f.submitted">
+            <small class="text-danger">Passwords do not match</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Name Field -->
+      <div class="form-group input-wrap">
+        <label for="name">Name</label>
+        <div class="input-wrap__group">
+          <input type="text" class="form-control" name="name" [(ngModel)]="form.name" required #name="ngModel" />
+          <small class="text-danger" *ngIf="name.invalid && f.submitted">Name is required</small>
+        </div>
+      </div>
+
+      <!-- Surname Field -->
+      <div class="form-group input-wrap">
+        <label for="surname">Surname</label>
+        <div class="input-wrap__group">
+          <input type="text" class="form-control" name="surname" [(ngModel)]="form.surname" required #surname="ngModel" />
+          <small class="text-danger" *ngIf="surname.invalid && f.submitted">Surname is required</small>
+        </div>
+      </div>
+
+      <!-- Org Field -->
+      <div class="form-group input-wrap">
+        <label for="org">Organization</label>
+        <div class="input-wrap__group">
+          <input type="text" class="form-control" name="org" [(ngModel)]="form.org" required #org="ngModel" />
+          <small class="text-danger" *ngIf="org.invalid && f.submitted">Organization is required</small>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-group">
+        <button mat-button class="submit-button" [disabled]="isLoading || f.invalid || !allFieldsPopulated()">
+          <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+          <span *ngIf="!isLoading">Sign Up</span>
+        </button>
+      </div>
+
+      <!-- Login Link -->
+      <div class="form-group">
+        <a routerLink="/app/login">Already have an account?</a>
+      </div>
+
+      <!-- Signup Failure Message -->
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        Signup failed!<br />{{ errorMessage }}
+      </div>
+    </form>
+
+    <!-- Success Message -->
+    <div class="alert alert-success" *ngIf="isSuccessful">
+      Your registration is successful!
+    </div>
+  </div>
+</div>

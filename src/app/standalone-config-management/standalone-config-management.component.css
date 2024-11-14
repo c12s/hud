@@ -1,0 +1,118 @@
+.schema-form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  mat-card {
+    padding: 20px;
+    margin: 20px 20px 20px 20px;
+  }
+  
+  mat-card-content {
+    overflow-y: hidden;
+  }
+  
+  .submit-button {
+    border: none;
+    padding: 2px 36px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    margin: 20px auto 5px;
+    cursor: pointer;
+    align-self: center;
+    }
+  
+    button:hover {
+    background-color: #0066ff;
+    color: #fff;
+  }
+  
+  .remove-button:hover {
+    background-color: red;
+    color: #fff;
+  }
+  
+  .validate-button:hover {
+    background-color: green;
+    color: #fff;
+  }
+  
+  .demo-table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  .demo-table th, .demo-table td {
+  width: auto; /* Allows the columns to take up available space */
+  }
+  
+  .demo-table .actions-column {
+  width: 150px; /* Set a fixed width for the Actions column */
+  }
+  
+  .mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+  }
+  
+  .valid-schema-row {
+    background-color: lightgreen !important; 
+  }
+  
+  .demo-row-is-clicked {
+    font-weight: bold;
+  }
+  
+  .form-container mat-form-field + mat-form-field {
+    margin-left: 8px;
+  }
+  
+  .form-button {
+    margin-left: 8px;
+  }
+  
+  .form-container mat-form-field {
+    width: 220px;
+  }
+  
+  .form-container form {
+    margin-bottom: 5px;
+  }
+  
+  .form-container form > * {
+    margin: 10px 0;
+  }
+  
+  .form-container .mat-radio-button {
+    margin: 0 12px;
+  }
+  
+  .form-fields {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .button-create-schema{
+    text-align: left; 
+    margin: 0 0 10px 20px;
+  }
+  
+  .valid-schema-row {
+    background-color: green;
+  }
+  
+  .info-container {
+    text-align: left;
+  }

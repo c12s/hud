@@ -1,0 +1,118 @@
+
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  box-sizing: border-box;
+}
+.register-title {
+  font-size: 30px;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 50px;
+  margin-top: 0;
+}
+.input-wrap {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  & input {
+    width: 300px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+}
+
+.input-wrap__group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.input-wrap__group input {
+  margin-bottom: 0px;
+  padding: 10px; 
+  border-radius: 10px;
+}
+
+.text-danger {
+  color: red;  
+  font-size: 12px;  
+  margin-top: 0px;  
+}
+
+.form-group.input-wrap{
+  margin-bottom: 20px;
+}
+
+
+  form {
+    width: 650px;
+    margin: 30px auto 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 9px 0px 0px #f2f2f2, 0 -9px 0px 0px #f2f2f2, 12px 0 15px -4px rgba(0, 0, 0, 0.2), -12px 0 15px -4px rgba(0, 0, 0, 0.2);
+
+    label {
+      width: 500px;
+      font-size: 15px;
+      font-weight: 300;
+      color: #282828;
+    }
+  
+  }     
+    .submit-button {
+      border: none;
+      padding: 2px 36px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      font-size: 16px;
+      margin: 20px auto 5px;
+      cursor: pointer;
+      align-self: center;
+      }
+      
+      button:hover {
+        background-color: #0066ff;
+        color: #fff;
+      }
+      
+      button:disabled {
+        background-color: #0066ff80;
+        color: #fff;
+      }
+    
+      .error-message {
+        margin-top: 1.5rem;
+        font-size: 2.5rem;
+        color: red;
+      }
+    
+      .error-message {
+        margin-top: 1.5rem;
+        font-size: 2.5rem;
+        color: red;
+      }
+      
+      a:link {
+        text-decoration: none;
+        display: block;
+        text-align: center; 
+        margin: 10px 0; 
+      }
+      
+      a:hover {
+        text-decoration: underline;
+        color: #0066ff
+      }
+    
+      .profile-image {
+        padding-bottom: 1rem;
+        scale: 90%;
+      }
+  

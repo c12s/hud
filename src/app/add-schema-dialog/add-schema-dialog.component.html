@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Create Schema</h2>
+<mat-dialog-content>
+  <form [formGroup]="schemaForm">
+    <mat-form-field>
+      <mat-label>Organization</mat-label>
+      <input matInput formControlName="org" name="org" required />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Namespace</mat-label>
+      <input matInput formControlName="namespace" name="namespace" required />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" name="name" required />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Version</mat-label>
+      <input matInput formControlName="version" name="version" required />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()" cdkFocusInitial>
+    <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+    <span *ngIf="!isLoading">Submit</span>
+  </button>
+</mat-dialog-actions>

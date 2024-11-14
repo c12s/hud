@@ -1,0 +1,55 @@
+
+
+  .mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+  }
+
+  .form-container mat-form-field + mat-form-field {
+    margin-left: 8px;
+  }
+
+  .form-button {
+    margin-left: 8px;
+  }
+  
+  .form-container mat-form-field {
+    width: 220px;
+  }
+  
+  .form-container form {
+    margin-bottom: 5px;
+  }
+  
+  .form-container form > * {
+    margin: 12px 0;
+  }
+  
+  .form-container .mat-radio-button {
+    margin: 0 12px;
+  }
+  
+  .form-fields {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  mat-card {
+    padding: 20px;
+    margin: 10px 20px 20px 20px;
+  }
+
+  mat-card-content {
+    overflow-y: auto;
+  }
+
+  button:hover {
+    background-color: #0066ff;
+    color: #fff;
+  }
+  

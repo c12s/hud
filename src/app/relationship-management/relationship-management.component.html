@@ -1,0 +1,46 @@
+<div class="relationship-form-container">
+<form (ngSubmit)="onSubmit()">
+    <mat-card>
+    <mat-card-header>
+        <mat-card-title>Create Relationship</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="form-group">
+        <mat-form-field appearance="fill">
+            <mat-label>From ID</mat-label>
+            <input matInput [(ngModel)]="fromId" name="fromId" required>
+        </mat-form-field>
+        </div>
+
+        <div class="form-group">
+        <mat-form-field appearance="fill">
+            <mat-label>From Kind</mat-label>
+            <input matInput [(ngModel)]="fromKind" name="fromKind" required>
+        </mat-form-field>
+        </div>
+
+        <div class="form-group">
+        <mat-form-field appearance="fill">
+            <mat-label>To ID</mat-label>
+            <input matInput [(ngModel)]="toId" name="toId" required>
+        </mat-form-field>
+        </div>
+
+        <div class="form-group">
+        <mat-form-field appearance="fill">
+            <mat-label>To Kind</mat-label>
+            <input matInput [(ngModel)]="toKind" name="toKind" required>
+        </mat-form-field>
+        </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+        <button mat-button class="submit-button" color="primary" type="submit">
+            <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+            <span *ngIf="!isLoading">Create Relationship</span>
+        </button>
+    </mat-card-actions>
+    </mat-card>
+</form>
+</div>
+

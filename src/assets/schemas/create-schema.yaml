@@ -1,0 +1,13 @@
+properties:
+  db_config:
+    type: object
+    properties:
+      address:
+        type: string
+      port:
+        type: string
+    required:
+      - address
+      - port
+required:
+  - db_config
